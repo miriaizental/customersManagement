@@ -38,7 +38,7 @@ export class CustomersService {
   logIn(cus:any){
     if(cus){
       this.setWithExpiry(this.localStorageKey, cus.idNumber);
-      this.currCustomer = cus;
+      this.currCustomer = cus.idNumber;
       this.isLoggedIn = true;
     }
   }

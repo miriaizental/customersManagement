@@ -20,6 +20,7 @@ export class CustomerDetailsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    debugger;
     if(this.customersService.isLoggedIn){
       this.customersService.getCustomerDetails(this.customersService.currCustomer).subscribe({
         next: (customer:any)=>{
