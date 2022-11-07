@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CustomersService } from 'src/app/services/customers.service';
 
 @Component({
@@ -9,25 +10,37 @@ import { CustomersService } from 'src/app/services/customers.service';
 })
 export class CustomerDetailsComponent implements OnInit {
 
-  @Input() customer:any;
+  customer:any;
   currContract:any;
   customerAddressForm:any;
   isEnableEditing:boolean = false;
 
-  constructor(private formBuilder:FormBuilder, private customersService:CustomersService) {}
+  constructor(private router:Router, private formBuilder:FormBuilder, private customersService:CustomersService) {}
 
 
 
   ngOnInit(): void {
-    this.customerAddressForm = this.formBuilder.group({
-      firstName: [this.customer.firstName, Validators.compose([Validators.required])],
-      lastName: [this.customer.lastName, Validators.compose([Validators.required])],
-      idNumber: [this.customer.idNumber, Validators.compose([Validators.required])],
-      city: [this.customer.address.city, Validators.compose([Validators.required])],
-      street: [this.customer.address.street, Validators.compose([Validators.required])],
-      number: [this.customer.address.number, Validators.compose([Validators.required])],
-      zipCode: [this.customer.address.zipCode, Validators.compose([Validators.required])]
-    })
+    if(this.customersService.isLoggedIn){
+      this.customersService.getCustomerDetails(this.customersService.currCustomer).subscribe({
+        next: (customer:any)=>{
+          if(customer){
+            this.customer = customer;
+            this.customerAddressForm = this.formBuilder.group({
+              firstName: [this.customer.firstName, Validators.compose([Validators.required])],
+              lastName: [this.customer.lastName, Validators.compose([Validators.required])],
+              idNumber: [this.customer.idNumber, Validators.compose([Validators.required])],
+              city: [this.customer.address.city, Validators.compose([Validators.required])],
+              street: [this.customer.address.street, Validators.compose([Validators.required])],
+              number: [this.customer.address.number, Validators.compose([Validators.required])],
+              zipCode: [this.customer.address.zipCode, Validators.compose([Validators.required])]
+            })
+          }
+        },
+        error: (error:any)=>{
+          this.router.navigate([''])
+        }
+      })
+      }
   }
 
   openContractDetails(contractId:String){

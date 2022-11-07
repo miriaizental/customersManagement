@@ -27,7 +27,6 @@
 <div *ngIf="isLoggedIn">
     <button class="btn btn-primary"(click)='logOut()'>התנתק</button>
 </div>
-<app-customer-details [customer]="loggedInCustomer" *ngIf="isLoggedIn"></app-customer-details>
 <router-outlet></router-outlet>
 
 </body>
