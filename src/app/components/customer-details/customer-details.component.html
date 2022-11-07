@@ -1,0 +1,35 @@
+<body>
+<div class="card">
+    <div class="card-body">
+
+
+        <form [formGroup]="customerAddressForm" (ngSubmit)="onSubmit()" class="form-inline">
+                <label for="firstName" class="mr-sm-2">שם פרטי</label>
+                  <input type="text" [readonly]="true" formControlName="firstName" class="form-control mb-2 mr-sm-2"/>
+                <label for="lastName" class="mr-sm-2">שם משפחה</label>
+                  <input type="text" [readonly]="true" formControlName="lastName" class="form-control mb-2 mr-sm-2"/>
+                <label for="idNumber" class="mr-sm-2">ת.ז.</label>
+                  <input type="text" [readonly]="true" formControlName="idNumber" class="form-control mb-2 mr-sm-2"/>
+                <label for="city" class="mr-sm-2">עיר</label>
+                  <input type="text" [readonly]="!isEnableEditing" formControlName="city" class="form-control mb-2 mr-sm-2"/>
+                <label for="street" class="mr-sm-2">רחוב</label>
+                  <input type="text" [readonly]="!isEnableEditing" formControlName="street" class="form-control mb-2 mr-sm-2"/>
+                <label for="number" class="mr-sm-2">מספר בית</label>
+                  <input type="text" [readonly]="!isEnableEditing" formControlName="number" class="form-control mb-2 mr-sm-2"/>
+                <label for="zipCode" class="mr-sm-2">מיקוד</label>
+                  <input type="text" [readonly]="!isEnableEditing" formControlName="zipCode" class="form-control mb-2 mr-sm-2"/>
+                <button class="btn btn-primary" *ngIf="isEnableEditing">עדכן כתובת</button>
+                <button class="btn btn-primary" *ngIf="!isEnableEditing" (click)="isEnableEditing = !isEnableEditing">ערוך כתובת</button>
+            </form>
+</div>
+<div class="card-body">
+    <label class="mr-sm-2">מנויים</label>
+                <div class="list-group list-group-horizontal" *ngFor="let contract of customer.contractList">
+                    <a href="javascript:void(0)" (click)="openContractDetails(contract.contractId)">{{contract.contractName}}</a>
+                </div>
+</div>
+</div>
+</body>
+  
+
+<app-contract-details [contract]="currContract" *ngIf="currContract"></app-contract-details>

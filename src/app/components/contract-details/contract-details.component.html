@@ -1,0 +1,10 @@
+<body>
+<div>מספר מנוי: {{contract.contractId}}</div>
+<div>שם מנוי: {{contract.contractName}}</div>
+<div *ngFor="let package of contract.packagesList" class="card bg-light">
+    <div>שם חבילה: {{package.packageName}}</div>
+    <div>כמות: {{package.packageQuantity}}</div>
+    <div>יתרה: {{package.packageBalance}}</div>
+    <div>סוג החבילה: {{package.packageType}}</div>
+</div>
+</body>
